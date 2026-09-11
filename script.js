@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="birthday-gate-kicker">♡ Sebelum masuk ♡</div>
                 <h2>Kapan kita pertama kali bertemu ?</h2>
                 <p class="birthday-gate-subtitle">
-                    Jawab dengan tanggal yang hanya kita berdua tahu.
+                    
                 </p>
                 <input
                     id="birthdayGateInput"
