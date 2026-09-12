@@ -1,4 +1,12 @@
+/* =========================================================
+   WEBSITE ULANG TAHUN DINI
+   STYLE.CSS — FINAL
+========================================================= */
 
+
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     margin: 0;
@@ -35,6 +43,11 @@ img {
     display: none !important;
 }
 
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+
 .scroll-progress {
     position: fixed;
 
@@ -48,6 +61,11 @@ img {
 
     z-index: 9999;
 }
+
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
 
 .floating-hearts {
     position: fixed;
@@ -100,6 +118,11 @@ img {
         opacity: 0;
     }
 }
+
+
+/* =========================================================
+   INTRO
+========================================================= */
 
 .intro {
     min-height: 100vh;
@@ -204,6 +227,11 @@ img {
     background: rgba(255,255,255,.1);
 }
 
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
 .navbar {
     position: sticky;
 
@@ -256,6 +284,11 @@ img {
 
     cursor: pointer;
 }
+
+
+/* =========================================================
+   HERO
+========================================================= */
 
 .hero {
     min-height: 90vh;
@@ -336,6 +369,11 @@ img {
     background: rgba(255,255,255,.3);
 }
 
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
 .quote-section,
 .chapter,
 .about-section,
@@ -388,6 +426,11 @@ img {
     color: #a58b87;
 }
 
+
+/* =========================================================
+   CHAPTER
+========================================================= */
+
 .chapter {
     text-align: center;
 }
@@ -418,6 +461,11 @@ img {
 
     color: rgba(255,255,255,.5);
 }
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
 
 .about-section {
     display: grid;
@@ -473,6 +521,11 @@ img {
 
     color: rgba(255,255,255,.62);
 }
+
+
+/* =========================================================
+   GALLERY
+========================================================= */
 
 .gallery-section {
     max-width: 1300px;
@@ -536,6 +589,11 @@ img {
     color: #fff;
 }
 
+
+/* =========================================================
+   CONFESSION
+========================================================= */
+
 .confession-section {
     max-width: 1100px;
 
@@ -586,6 +644,11 @@ img {
 
     color: #d5aaa5;
 }
+
+
+/* =========================================================
+   REASONS
+========================================================= */
 
 .reasons-section {
     max-width: 1300px;
@@ -654,6 +717,11 @@ img {
     color: rgba(255,255,255,.55);
 }
 
+
+/* =========================================================
+   ORIGINAL LETTER
+========================================================= */
+
 .letter-section {
     text-align: center;
 }
@@ -674,6 +742,11 @@ img {
 
     color: rgba(255,255,255,.5);
 }
+
+
+/* =========================================================
+   ORIGINAL ZIPPER
+========================================================= */
 
 .zipper-container {
     width: min(600px, 90vw);
@@ -756,6 +829,11 @@ img {
     z-index: 10;
 }
 
+
+/* =========================================================
+   DIARY
+========================================================= */
+
 .diary {
     width: min(800px, 92vw);
 
@@ -829,6 +907,11 @@ img {
     color: #765d57;
 }
 
+
+/* =========================================================
+   SECRET
+========================================================= */
+
 .secret-section {
     text-align: center;
 }
@@ -892,6 +975,13 @@ img {
 
 }
 
+
+/* =========================================================
+   =========================================================
+   GIFT SECTION
+   =========================================================
+========================================================= */
+
 .gift-section {
     position: relative;
 
@@ -914,6 +1004,11 @@ img {
 
     margin: auto;
 }
+
+
+/* =========================================================
+   SURAT PETUNJUK
+========================================================= */
 
 .gift-letter-stage {
     width: 100%;
@@ -946,6 +1041,11 @@ img {
     font-size: 14px;
 }
 
+
+/* =========================================================
+   CLUE ENVELOPE
+========================================================= */
+
 .clue-envelope {
     position: relative;
 
@@ -969,6 +1069,11 @@ img {
     transition:
         height .4s ease;
 }
+
+
+/* =========================================================
+   TOP LABEL
+========================================================= */
 
 .clue-envelope-top {
     position: absolute;
@@ -998,6 +1103,11 @@ img {
 
     z-index: 20;
 }
+
+
+/* =========================================================
+   SURAT
+========================================================= */
 
 .clue-paper {
     position: absolute;
@@ -1037,6 +1147,11 @@ img {
         transform .6s cubic-bezier(.2,.8,.2,1);
 }
 
+
+/* =========================================================
+   INI YANG MEMBUKA SURAT
+========================================================= */
+
 .clue-envelope.opened .clue-paper {
     transform:
         translateX(-50%)
@@ -1046,6 +1161,11 @@ img {
 
     pointer-events: auto;
 }
+
+
+/* =========================================================
+   ISI SURAT
+========================================================= */
 
 .clue-paper-inner {
     width: 100%;
@@ -1125,6 +1245,11 @@ img {
     color: #715b54;
 }
 
+
+/* =========================================================
+   ZIPPER HORIZONTAL
+========================================================= */
+
 .clue-zipper {
     position: absolute;
 
@@ -1139,6 +1264,9 @@ img {
 
     touch-action: none;
 }
+
+
+/* GARIS */
 
 .clue-zipper-line {
     position: absolute;
@@ -1156,6 +1284,9 @@ img {
 
     background: rgba(255,255,255,.22);
 }
+
+
+/* PROGRESS */
 
 .clue-zipper::after {
     content: "";
@@ -1180,6 +1311,11 @@ img {
 
     pointer-events: none;
 }
+
+
+/* =========================================================
+   HANDLE ZIPPER
+========================================================= */
 
 .clue-zipper-pull {
     position: absolute;
@@ -1255,9 +1391,19 @@ img {
     z-index: 2;
 }
 
+
+/* =========================================================
+   OPENED ENVELOPE
+========================================================= */
+
 .clue-envelope.opened {
     height: 380px;
 }
+
+
+/* =========================================================
+   OPEN MESSAGE
+========================================================= */
 
 .clue-open-message {
     margin-top: 25px;
@@ -1328,6 +1474,11 @@ img {
         0 10px 30px rgba(0,0,0,.3);
 }
 
+
+/* =========================================================
+   GAME PANEL
+========================================================= */
+
 .gift-game-panel {
     width: 100%;
 
@@ -1377,6 +1528,11 @@ img {
     color: rgba(255,255,255,.5);
 }
 
+
+/* =========================================================
+   GIFT BOX STAGE
+========================================================= */
+
 .gift-box-stage {
     position: relative;
 
@@ -1390,6 +1546,11 @@ img {
 
     overflow: visible;
 }
+
+
+/* =========================================================
+   GAME GIFT
+========================================================= */
 
 .game-gift {
     position: absolute;
@@ -1428,6 +1589,11 @@ img {
             calc(var(--gift-scale, 1) * 1.08)
         );
 }
+
+
+/* =========================================================
+   BOX
+========================================================= */
 
 .game-gift-box {
     position: relative;
@@ -1540,6 +1706,11 @@ img {
     z-index: 6;
 }
 
+
+/* =========================================================
+   SECRET LETTER INSIDE BOX
+========================================================= */
+
 .gift-secret-letter {
     position: absolute;
 
@@ -1610,6 +1781,11 @@ img {
     z-index: 1;
 }
 
+
+/* =========================================================
+   BOX OPEN
+========================================================= */
+
 .game-gift.open .game-gift-lid {
     transform:
         rotateX(65deg)
@@ -1637,6 +1813,11 @@ img {
             rgba(180,100,100,.4)
         );
 }
+
+
+/* =========================================================
+   COUNTDOWN
+========================================================= */
 
 .gift-shuffle-countdown {
     position: absolute;
@@ -1685,6 +1866,11 @@ img {
         opacity: 0;
     }
 }
+
+
+/* =========================================================
+   RESULT
+========================================================= */
 
 .gift-game-message {
     max-width: 600px;
@@ -1738,6 +1924,11 @@ img {
 
     cursor: pointer;
 }
+
+
+/* =========================================================
+   HIDDEN GIFT LETTER
+========================================================= */
 
 .hidden-gift-letter {
     max-width: 850px;
@@ -1818,6 +2009,11 @@ img {
     color: #715b54;
 }
 
+
+/* =========================================================
+   FINAL
+========================================================= */
+
 .final-section {
     min-height: 80vh;
 
@@ -1882,6 +2078,11 @@ img {
     color: #a98c88;
 }
 
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
 footer {
     padding: 40px 20px;
 
@@ -1902,6 +2103,11 @@ footer span {
     letter-spacing: 3px;
 }
 
+
+/* =========================================================
+   REVEAL
+========================================================= */
+
 .reveal {
     opacity: 0;
 
@@ -1917,6 +2123,11 @@ footer span {
 
     transform: translateY(0);
 }
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 700px) {
 
@@ -1985,6 +2196,10 @@ footer span {
         font-size: 32px;
     }
 
+    /* ===============================
+       CLUE MOBILE
+    =============================== */
+
     .gift-section {
         min-height: 800px;
     }
@@ -2046,6 +2261,10 @@ footer span {
         width: 42px;
         height: 42px;
     }
+
+    /* ===============================
+       GIFT BOX MOBILE
+    =============================== */
 
     .gift-box-stage {
         height: 270px;
@@ -2116,6 +2335,11 @@ footer span {
 
 }
 
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
 @media (max-width: 400px) {
 
     .gift-letter-intro h2 {
@@ -2141,11 +2365,19 @@ footer span {
 
 }
 
+/* =========================================================
+   MOBILE TOUCH FIX — ZIPPER + PAGE SCROLL
+   Vertical swipe = page scroll.
+   Horizontal swipe on clue zipper = zipper drag.
+   Vertical swipe on original zipper = zipper drag.
+========================================================= */
+
 .clue-zipper,
 .clue-zipper-pull {
     touch-action: pan-y !important;
 }
 
+/* The vertical original zipper intentionally owns vertical dragging. */
 #zipperEnvelope,
 #zipperHandle {
     touch-action: none !important;
@@ -2157,7 +2389,14 @@ footer span {
     user-select: none;
     -webkit-touch-callout: none;
 }
+/* =========================================================
+   FIX SUMBU LILIN ANGKA 25
+   - Hapus sumbu yang muncul di atas api
+   - Buat sumbu berada di badan lilin
+   - Api tetap bergoyang seperti versi awal
+   ========================================================= */
 
+/* API — TETAP seperti versi awal */
 .number-flame {
     position: absolute;
     left: 50%;
@@ -2192,6 +2431,7 @@ footer span {
 
     transform-origin: 50% 100%;
 
+    /* API TETAP BERGOYANG */
     animation:
         numberFlameReal
         .12s
@@ -2200,17 +2440,23 @@ footer span {
         alternate;
 }
 
+
+/* HAPUS SUMBU YANG SELAMA INI MENEMPEL PADA API */
 .number-flame::before {
     content: none !important;
     display: none !important;
 }
 
+
+/* =========================================================
+   SUMBU ASLI PADA BADAN LILIN
+   ========================================================= */
 .number-candle::before {
     content: "";
 
     position: absolute;
     left: 50%;
-    top: 25px; 
+    top: 25px; /* TURUNKAN SUMBU */
 
     width: 4px;
     height: 25px;
@@ -2233,6 +2479,7 @@ footer span {
         0 1px 2px rgba(0,0,0,.35);
 }
 
+/* posisi sumbu disesuaikan sedikit agar tepat dengan angka */
 .number-candle-2::before {
     left: 49%;
 }
@@ -2240,6 +2487,11 @@ footer span {
 .number-candle-5::before {
     left: 51%;
 }
+
+
+/* =========================================================
+   API TETAP BERGOYANG
+   ========================================================= */
 
 @keyframes numberFlameReal {
     from {
@@ -2257,6 +2509,11 @@ footer span {
     }
 }
 
+/* =========================================================
+   FIX SUMBU LILIN KHUSUS MOBILE
+   Menghilangkan gap antara sumbu dan api
+   ========================================================= */
+
 @media (max-width: 600px) {
 
     .number-candle::before {
@@ -2273,6 +2530,11 @@ footer span {
     }
 
 }
+
+/* =========================================================
+   ROMANTIC ENHANCEMENTS — SURAT 2 / FINAL
+   Tidak mengubah musik atau mekanisme lilin intro.
+========================================================= */
 
 .gift-section.letter-reveal-active {
     background:
@@ -2515,5 +2777,278 @@ footer span {
 
     .birthday-ending-close {
         margin-top: 30px;
+    }
+}
+
+
+/* =========================================================
+   BIRTHDAY GATE — GERBANG KHUSUS DINI
+========================================================= */
+
+/* =========================================================
+   BIRTHDAY GATE — ANIMASI PINTU GERBANG
+   Dua daun pintu membuka saat masuk dan menutup saat keluar.
+========================================================= */
+.birthday-gate-door {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    z-index: 2;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, rgba(25,10,18,.98), rgba(66,28,44,.96) 48%, rgba(30,12,21,.98));
+    box-shadow: inset 0 0 70px rgba(0,0,0,.45);
+    transition: transform 1.05s cubic-bezier(.77,0,.18,1);
+}
+
+.birthday-gate-door::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 4px;
+    height: 42%;
+    border-radius: 999px;
+    background: linear-gradient(to bottom, transparent, rgba(245,129,160,.55), transparent);
+    opacity: .8;
+}
+
+.birthday-gate-door-left {
+    left: 0;
+    transform: translateX(0);
+}
+
+.birthday-gate-door-left::before {
+    right: 22px;
+    transform: translateY(-50%);
+}
+
+.birthday-gate-door-right {
+    right: 0;
+    transform: translateX(0);
+    background:
+        linear-gradient(270deg, rgba(25,10,18,.98), rgba(66,28,44,.96) 48%, rgba(30,12,21,.98));
+}
+
+.birthday-gate-door-right::before {
+    left: 22px;
+    transform: translateY(-50%);
+}
+
+.birthday-gate.open .birthday-gate-door-left {
+    transform: translateX(-100%);
+}
+
+.birthday-gate.open .birthday-gate-door-right {
+    transform: translateX(100%);
+}
+
+.birthday-gate.closing .birthday-gate-door-left,
+.birthday-gate.closing .birthday-gate-door-right {
+    transform: translateX(0);
+}
+
+.birthday-gate-card {
+    position: relative;
+    z-index: 3;
+}
+
+.birthday-gate:not(.open) .birthday-gate-card {
+    opacity: 0;
+}
+
+.birthday-gate.open .birthday-gate-card {
+    opacity: 1;
+    transition: opacity .45s ease .35s, transform .65s cubic-bezier(.2,.8,.2,1);
+}
+
+.birthday-gate.closing .birthday-gate-card {
+    opacity: 0;
+    transition: opacity .22s ease;
+}
+
+@media (max-width: 600px) {
+    .birthday-gate-door::before {
+        height: 32%;
+    }
+
+    .birthday-gate-door-left::before {
+        right: 12px;
+    }
+
+    .birthday-gate-door-right::before {
+        left: 12px;
+    }
+}
+
+
+.birthday-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(20, 10, 16, .86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .55s ease, visibility .55s ease;
+}
+
+.birthday-gate.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.birthday-gate.hide {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.birthday-gate-card {
+    width: min(520px, 100%);
+    padding: 42px 34px 36px;
+    text-align: center;
+    border: 1px solid rgba(255, 190, 205, .22);
+    border-radius: 28px;
+    background: rgba(48, 25, 36, .92);
+    box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 70px rgba(245,129,160,.12);
+    transform: translateY(24px) scale(.96);
+    transition: transform .65s cubic-bezier(.2,.8,.2,1);
+}
+
+.birthday-gate.show .birthday-gate-card {
+    transform: translateY(0) scale(1);
+}
+
+.birthday-gate-kicker {
+    margin-bottom: 14px;
+    color: rgba(245,129,160,.9);
+    font-size: 13px;
+    letter-spacing: .24em;
+    text-transform: uppercase;
+}
+
+.birthday-gate-card h2 {
+    margin: 0;
+    color: #fff1f5;
+    font-family: "Caveat", cursive;
+    font-size: clamp(32px, 6vw, 46px);
+    font-weight: 500;
+    line-height: 1.05;
+}
+
+.birthday-gate-subtitle {
+    margin: 14px auto 26px;
+    max-width: 400px;
+    color: rgba(255,255,255,.66);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.birthday-gate-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 16px;
+    padding: 15px 17px;
+    outline: none;
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    text-align: center;
+    font: inherit;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.birthday-gate-input::placeholder {
+    color: rgba(255,255,255,.38);
+}
+
+.birthday-gate-input:focus {
+    border-color: rgba(245,129,160,.65);
+    background: rgba(255,255,255,.08);
+    box-shadow: 0 0 0 4px rgba(245,129,160,.08);
+}
+
+.birthday-gate-submit {
+    width: 100%;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 16px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, rgba(245,129,160,.95), rgba(190,105,140,.95));
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 12px 30px rgba(245,129,160,.18);
+    transition: transform .2s ease, filter .2s ease;
+}
+
+.birthday-gate-submit:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+.birthday-gate-submit:disabled {
+    cursor: default;
+}
+
+.birthday-gate-feedback {
+    min-height: 48px;
+    margin-top: 20px;
+    color: rgba(255,255,255,.78);
+    font-family: "Caveat", cursive;
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+.birthday-gate.wrong .birthday-gate-card {
+    animation: birthdayGateShake .48s ease;
+}
+
+.birthday-gate.wrong .birthday-gate-feedback {
+    color: #ffb3c7;
+}
+
+.birthday-gate.success .birthday-gate-card {
+    box-shadow: 0 30px 90px rgba(0,0,0,.55), 0 0 90px rgba(245,129,160,.28);
+}
+
+.birthday-gate.success .birthday-gate-feedback {
+    color: #ffd6e1;
+    animation: birthdayGateSuccess .8s ease both;
+}
+
+@keyframes birthdayGateShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(9px); }
+    60% { transform: translateX(-7px); }
+    80% { transform: translateX(5px); }
+}
+
+@keyframes birthdayGateSuccess {
+    0% { opacity: 0; transform: translateY(8px) scale(.96); }
+    60% { opacity: 1; transform: translateY(-2px) scale(1.04); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 600px) {
+    .birthday-gate {
+        padding: 18px;
+    }
+
+    .birthday-gate-card {
+        padding: 34px 22px 28px;
+        border-radius: 24px;
+    }
+
+    .birthday-gate-kicker {
+        letter-spacing: .16em;
+        font-size: 11px;
     }
 }
