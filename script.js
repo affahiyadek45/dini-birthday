@@ -1,13 +1,6 @@
-/* =========================================================
-   WEBSITE ULANG TAHUN DINI
-   SCRIPT.JS — FINAL
-========================================================= */
+
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    /* =====================================================
-       ELEMENT
-    ===================================================== */
 
     const intro =
         document.getElementById("intro");
@@ -33,16 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const scrollProgress =
         document.getElementById("scrollProgress");
 
-
-    /* =====================================================
-       HELPER
-    ===================================================== */
-
     const sleep = ms =>
         new Promise(resolve =>
             setTimeout(resolve, ms)
         );
-
 
     const clamp = (
         value,
@@ -54,13 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             max
         );
 
-
-    /* =====================================================
-       MUSIC
-    ===================================================== */
-
     let musicPlaying = false;
-
 
     function updateMusicUI() {
 
@@ -74,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-
 
     async function playMusic() {
 
@@ -98,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function pauseMusic() {
 
         if (!music) return;
@@ -110,7 +89,6 @@ document.addEventListener("DOMContentLoaded", () => {
         updateMusicUI();
 
     }
-
 
     if (musicButton) {
 
@@ -135,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     if (music) {
 
         music.addEventListener(
@@ -148,7 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
         );
-
 
         music.addEventListener(
             "pause",
@@ -163,155 +139,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       START WEBSITE
-    ===================================================== */
-
-    /* =====================================================
-       BIRTHDAY GATE — GERBANG KHUSUS DINI
-    ===================================================== */
-
-    function normalizeMeetingAnswer(value) {
-        return String(value || "")
-            .trim()
-            .toLowerCase()
-            .replace(/,/g, "")
-            .replace(/\s+/g, " ");
-    }
-
-    function showBirthdayGate() {
-        if (document.getElementById("birthdayGate")) return;
-
-        const gate = document.createElement("div");
-        gate.id = "birthdayGate";
-        gate.className = "birthday-gate";
-        gate.innerHTML = `
-            <div class="birthday-gate-door birthday-gate-door-left" aria-hidden="true"></div>
-            <div class="birthday-gate-door birthday-gate-door-right" aria-hidden="true"></div>
-            <div class="birthday-gate-card">
-                <div class="birthday-gate-kicker">♡ Sebelum masuk ♡</div>
-                <h2>Setelah berpisah, kapan kemudian kita bertemu kembali ?</h2>
-                <p class="birthday-gate-subtitle">
-                    
-                </p>
-                <input
-                    id="birthdayGateInput"
-                    class="birthday-gate-input"
-                    type="text"
-                    autocomplete="off"
-                    placeholder=""
-                >
-                <button id="birthdayGateSubmit" class="birthday-gate-submit" type="button">
-                    Masuk ♡
-                </button>
-                <div id="birthdayGateFeedback" class="birthday-gate-feedback" aria-live="polite"></div>
-            </div>
-        `;
-
-        document.body.appendChild(gate);
-
-        const input = gate.querySelector("#birthdayGateInput");
-        const submit = gate.querySelector("#birthdayGateSubmit");
-        const feedback = gate.querySelector("#birthdayGateFeedback");
-
-        const correctAnswers = new Set([
-            "27 maret 2026",
-            "27/03/2026",
-            "27-03-2026",
-            "27.03.2026",
-            "2026-03-27"
-        ]);
-
-        const checkAnswer = async () => {
-            const answer = normalizeMeetingAnswer(input.value);
-            const isCorrect = correctAnswers.has(answer);
-
-            if (!isCorrect) {
-                gate.classList.remove("success");
-                gate.classList.remove("wrong");
-                void gate.offsetWidth;
-                gate.classList.add("wrong");
-                feedback.textContent = "Kamu bukan Dini Septiani. Dilarang masuk";
-                return;
-            }
-
-            gate.classList.remove("wrong");
-            gate.classList.add("success");
-            feedback.textContent = "betul sekali kamu adalah Dini Septiani, Silahkan Tuan Putri";
-            input.disabled = true;
-            submit.disabled = true;
-
-            createHeartExplosion(18);
-
-            await sleep(1900);
-
-            /* Gerbang menutup kembali sebelum layar masuk menghilang. */
-            gate.classList.add("closing");
-            await sleep(900);
-            gate.classList.add("hide");
-
-            await sleep(700);
-            gate.remove();
-
-            if (intro) {
-                intro.classList.add("hidden");
-            }
-
-            if (website) {
-                website.classList.remove("hidden");
-                website.classList.add("is-visible");
-            }
-
-            window.scrollTo({
-                top: 0,
-                behavior: "instant"
-            });
-
-            /* Tetap memakai alur lilin asli tanpa mengubah mekanisme tiup pertama. */
-            openCandleScene();
-            startCandleMicrophone();
-
-            /* Musik tetap sama dan tetap diam sampai lilin ditiup. */
-            if (music) {
-                try {
-                    music.muted = true;
-                    await music.play();
-                    music.pause();
-                    music.currentTime = 0;
-                    music.muted = false;
-                } catch (error) {
-                    music.muted = false;
-                }
-            }
-        };
-
-        submit.addEventListener("click", checkAnswer);
-        input.addEventListener("keydown", event => {
-            if (event.key === "Enter") checkAnswer();
-        });
-
-        requestAnimationFrame(() => {
-            gate.classList.add("show");
-
-            /* Pintu gerbang terbuka setelah layar muncul. */
-            requestAnimationFrame(() => {
-                gate.classList.add("open");
-                input.focus();
-            });
-        });
-    }
-
     if (startButton) {
-        startButton.addEventListener("click", () => {
-            showBirthdayGate();
-        });
+
+        startButton.addEventListener(
+            "click",
+            async () => {
+
+                if (intro) {
+
+                    intro.classList.add(
+                        "hidden"
+                    );
+
+                }
+
+                if (website) {
+
+                    website.classList.remove(
+                        "hidden"
+                    );
+
+                    website.classList.add(
+                        "is-visible"
+                    );
+
+                }
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "instant"
+                });
+
+                openCandleScene();
+
+                startCandleMicrophone();
+
+                if (music) {
+                    try {
+                        music.muted = true;
+                        await music.play();
+                        music.pause();
+                        music.currentTime = 0;
+                        music.muted = false;
+                    } catch (error) {
+                        music.muted = false;
+                    }
+                }
+
+            }
+        );
+
     }
-
-
-    /* =====================================================
-       HEARTS
-    ===================================================== */
 
     function createFloatingHeart() {
 
@@ -324,41 +202,33 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const heart =
             document.createElement("div");
 
-
         heart.className =
             "floating-heart";
-
 
         heart.textContent =
             Math.random() > .5
                 ? "♡"
                 : "♥";
 
-
         heart.style.left =
             Math.random() * 100 + "%";
-
 
         heart.style.fontSize =
             10 +
             Math.random() * 18 +
             "px";
 
-
         heart.style.animationDuration =
             5 +
             Math.random() * 5 +
             "s";
 
-
         floatingHearts.appendChild(
             heart
         );
-
 
         setTimeout(
             () => heart.remove(),
@@ -367,19 +237,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     setInterval(
         createFloatingHeart,
         1600
     );
-
 
     function createHeartExplosion(
         amount = 20
     ) {
 
         if (!floatingHearts) return;
-
 
         for (
             let i = 0;
@@ -395,45 +262,37 @@ document.addEventListener("DOMContentLoaded", () => {
                             "div"
                         );
 
-
                     heart.className =
                         "floating-heart";
-
 
                     heart.textContent =
                         Math.random() > .35
                             ? "♥"
                             : "♡";
 
-
                     heart.style.left =
                         35 +
                         Math.random() * 30 +
                         "%";
-
 
                     heart.style.bottom =
                         15 +
                         Math.random() * 25 +
                         "%";
 
-
                     heart.style.fontSize =
                         15 +
                         Math.random() * 30 +
                         "px";
-
 
                     heart.style.animationDuration =
                         3 +
                         Math.random() * 3 +
                         "s";
 
-
                     floatingHearts.appendChild(
                         heart
                     );
-
 
                     setTimeout(
                         () => heart.remove(),
@@ -447,12 +306,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-
-
-    /* =====================================================
-       ORIGINAL LETTER ZIPPER
-       ATAS → BAWAH
-    ===================================================== */
 
     const zipperEnvelope =
         document.getElementById(
@@ -469,20 +322,16 @@ document.addEventListener("DOMContentLoaded", () => {
             "diary"
         );
 
-
     let zipperDragging = false;
 
     let zipperOpened = false;
 
     let zipperOffsetY = 0;
 
-    // Touch-safe drag state.
-    // On mobile, vertical swipes must remain available for page scrolling.
     let zipperPointerId = null;
     let zipperStartX = 0;
     let zipperStartY = 0;
     const ZIPPER_DRAG_THRESHOLD = 10;
-
 
     function getOriginalBounds() {
 
@@ -498,17 +347,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         const height =
             zipperEnvelope.clientHeight;
-
 
         const handleHeight =
             zipperHandle.offsetHeight;
 
-
         const min = 8;
-
 
         const max =
             Math.max(
@@ -518,14 +363,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 8
             );
 
-
         return {
             min,
             max
         };
 
     }
-
 
     function setOriginalPosition(
         top,
@@ -534,10 +377,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!zipperHandle) return;
 
-
         const bounds =
             getOriginalBounds();
-
 
         const safeTop =
             clamp(
@@ -546,23 +387,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 bounds.max
             );
 
-
         zipperHandle.style.transition =
             animate
                 ? "top .55s cubic-bezier(.2,.8,.2,1)"
                 : "none";
 
-
         zipperHandle.style.top =
             safeTop + "px";
-
 
         if (zipperEnvelope) {
 
             const range =
                 bounds.max -
                 bounds.min;
-
 
             const progress =
                 range <= 0
@@ -571,7 +408,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         safeTop -
                         bounds.min
                     ) / range;
-
 
             zipperEnvelope.style.setProperty(
                 "--zipper-progress",
@@ -582,23 +418,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function openOriginalLetter() {
 
         if (zipperOpened) return;
 
         zipperOpened = true;
 
-
         const bounds =
             getOriginalBounds();
-
 
         setOriginalPosition(
             bounds.max,
             true
         );
-
 
         if (zipperEnvelope) {
 
@@ -608,25 +440,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         createHeartExplosion(30);
-
 
         setTimeout(
             () => {
 
                 if (!diary) return;
 
-
                 diary.classList.remove(
                     "hidden"
                 );
 
-
                 diary.classList.add(
                     "show"
                 );
-
 
                 setTimeout(
                     () => {
@@ -645,7 +472,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-
 
     if (
         zipperHandle &&
@@ -672,12 +498,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 zipperDragging = false;
 
-                // IMPORTANT: do not preventDefault here.
-                // The browser needs to see the initial touch so a vertical
-                // swipe can still scroll the page on mobile.
             }
         );
-
 
         zipperHandle.addEventListener(
             "pointermove",
@@ -699,8 +521,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const absX = Math.abs(deltaX);
                 const absY = Math.abs(deltaY);
 
-                // Wait for a real movement before deciding whether this
-                // gesture is a zipper drag or normal page scrolling.
                 if (!zipperDragging) {
 
                     if (
@@ -710,8 +530,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    // The original zipper moves vertically. If the user
-                    // moves horizontally more, let the browser handle it.
                     if (absX > absY) {
                         zipperPointerId = null;
                         return;
@@ -728,8 +546,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     } catch (error) {}
                 }
 
-                // Only block scrolling after we have confirmed that this
-                // gesture is intentionally dragging the vertical zipper.
                 event.preventDefault();
 
                 const rect =
@@ -746,7 +562,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
         );
-
 
         zipperHandle.addEventListener(
             "pointerup",
@@ -806,7 +621,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         zipperHandle.addEventListener(
             "pointercancel",
             event => {
@@ -838,11 +652,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       SECRET MESSAGE
-    ===================================================== */
-
     const secretButton =
         document.getElementById(
             "secretButton"
@@ -852,7 +661,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(
             "secretMessage"
         );
-
 
     if (
         secretButton &&
@@ -880,11 +688,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-
-
-    /* =====================================================
-       GIFT ELEMENT
-    ===================================================== */
 
     const giftLetterStage =
         document.getElementById(
@@ -987,13 +790,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById(
             "hiddenGiftLetter"
         );
-
-
-
-    /* =====================================================
-       ROMANTIC ENHANCEMENTS
-       Musik dan lilin intro sengaja tidak disentuh.
-    ===================================================== */
 
     let romanticPetalsPlayed = false;
     let birthdayEndingShown = false;
@@ -1181,11 +977,6 @@ document.addEventListener("DOMContentLoaded", () => {
         endingObserver.observe(finalSection);
     }
 
-
-    /* =====================================================
-       GIFT STATE
-    ===================================================== */
-
     let clueOpened = false;
 
     let giftGameStarted = false;
@@ -1200,30 +991,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let gameToken = 0;
 
-
-    /* =====================================================
-       CLUE ZIPPER
-       KIRI → KANAN
-    ===================================================== */
-
     let clueDragging = false;
 
     let clueOffsetX = 0;
 
-    // Touch-safe drag state.
-    // Horizontal movement opens the clue; vertical movement scrolls the page.
     let cluePointerId = null;
     let clueStartX = 0;
     let clueStartY = 0;
     const CLUE_DRAG_THRESHOLD = 10;
-
-
-    /*
-       INI PERBAIKAN TERPENTING.
-
-       Handle tidak lagi dihitung sampai
-       keluar jalur.
-    */
 
     function getClueBounds() {
 
@@ -1239,21 +1014,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         const trackWidth =
             clueZipper.clientWidth;
-
 
         const handleWidth =
             clueZipperPull.offsetWidth;
 
-
         const padding = 0;
-
 
         const min =
             padding;
-
 
         const max =
             Math.max(
@@ -1263,14 +1033,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 padding
             );
 
-
         return {
             min,
             max
         };
 
     }
-
 
     function setCluePosition(
         x,
@@ -1284,10 +1052,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const bounds =
             getClueBounds();
-
 
         const safeX =
             clamp(
@@ -1296,21 +1062,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 bounds.max
             );
 
-
         clueZipperPull.style.transition =
             animate
                 ? "left .6s cubic-bezier(.2,.8,.2,1)"
                 : "none";
 
-
         clueZipperPull.style.left =
             safeX + "px";
-
 
         const range =
             bounds.max -
             bounds.min;
-
 
         const progress =
             range <= 0
@@ -1320,7 +1082,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     bounds.min
                 ) / range;
 
-
         clueZipper.style.setProperty(
             "--zip-progress",
             progress
@@ -1328,12 +1089,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function resetClueZipper() {
 
         const bounds =
             getClueBounds();
-
 
         setCluePosition(
             bounds.min,
@@ -1342,33 +1101,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /*
-       INI YANG MEMBUKA SURAT.
-
-       Tidak ada lagi animasi memperbesar
-       kotak sebelum surat dibuka.
-    */
-
     function openClueLetter() {
 
         if (clueOpened) return;
-
 
         clueOpened = true;
 
         clueDragging = false;
 
-
         const bounds =
             getClueBounds();
-
 
         setCluePosition(
             bounds.max,
             true
         );
-
 
         if (clueEnvelope) {
 
@@ -1378,9 +1125,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         createHeartExplosion(25);
-
 
         setTimeout(
             () => {
@@ -1388,7 +1133,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!clueOpenMessage) {
                     return;
                 }
-
 
                 clueOpenMessage.classList.add(
                     "show"
@@ -1399,11 +1143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-
-
-    /* =====================================================
-       CLUE POINTER
-    ===================================================== */
 
     if (
         clueZipperPull &&
@@ -1430,11 +1169,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 clueDragging = false;
 
-                // IMPORTANT: no preventDefault on pointerdown.
-                // This keeps normal vertical page scrolling possible on touch.
             }
         );
-
 
         clueZipperPull.addEventListener(
             "pointermove",
@@ -1465,8 +1201,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-                    // The clue zipper moves horizontally. If the user is
-                    // swiping vertically, cancel our drag and let the page scroll.
                     if (absY > absX) {
                         cluePointerId = null;
                         return;
@@ -1488,8 +1222,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     } catch (error) {}
                 }
 
-                // Only block the browser after horizontal dragging has
-                // definitely been identified.
                 event.preventDefault();
 
                 const rect =
@@ -1525,7 +1257,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         );
-
 
         clueZipperPull.addEventListener(
             "pointerup",
@@ -1585,7 +1316,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         clueZipperPull.addEventListener(
             "pointercancel",
             event => {
@@ -1617,14 +1347,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       GIFT BOX POSITION
-    ===================================================== */
-
     const boxSlots =
         new Map();
-
 
     gameGiftButtons.forEach(
         (box, index) => {
@@ -1637,7 +1361,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     const SLOT_PERCENTAGES = [
         10,
         30,
@@ -1645,7 +1368,6 @@ document.addEventListener("DOMContentLoaded", () => {
         70,
         90
     ];
-
 
     function getGiftStage() {
 
@@ -1655,19 +1377,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function getSlotX(slot) {
 
         const stage =
             getGiftStage();
-
 
         if (!stage) {
 
             return 0;
 
         }
-
 
         return (
             stage.clientWidth *
@@ -1679,15 +1398,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function getGiftScale() {
 
         const stage =
             getGiftStage();
 
-
         if (!stage) return 1;
-
 
         return clamp(
             stage.clientWidth / 850,
@@ -1697,7 +1413,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function setBoxPosition(
         box,
         slot,
@@ -1706,30 +1421,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!box) return;
 
-
         const x =
             getSlotX(slot);
-
 
         box.style.left =
             x + "px";
 
-
         box.style.top =
             "50%";
-
 
         box.style.setProperty(
             "--gift-scale",
             getGiftScale()
         );
 
-
         if (instant) {
 
             box.style.transition =
                 "none";
-
 
             requestAnimationFrame(
                 () => {
@@ -1742,14 +1451,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         boxSlots.set(
             box.dataset.box,
             slot
         );
 
     }
-
 
     function resetAllGiftPositions() {
 
@@ -1767,7 +1474,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function getBoxBySlot(slot) {
 
         return gameGiftButtons.find(
@@ -1778,11 +1484,6 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
     }
-
-
-    /* =====================================================
-       LOCK
-    ===================================================== */
 
     function lockAllGiftBoxes() {
 
@@ -1800,7 +1501,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function unlockGiftBoxes() {
 
         gameGiftButtons.forEach(
@@ -1817,7 +1517,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     function updateGiftStatus(
         text
     ) {
@@ -1830,11 +1529,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-
-
-    /* =====================================================
-       READY BUTTON
-    ===================================================== */
 
     if (readyGiftButton) {
 
@@ -1849,9 +1543,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
                 giftGameStarted = true;
-
 
                 if (giftLetterStage) {
 
@@ -1860,7 +1552,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                 }
-
 
                 if (giftGamePanel) {
 
@@ -1874,7 +1565,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 prepareGiftGame();
 
             }
@@ -1882,24 +1572,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       PREPARE GAME
-    ===================================================== */
-
     function prepareGiftGame() {
 
         gameToken++;
 
-
         const token =
             gameToken;
-
 
         gameFinished = false;
 
         gameLocked = true;
-
 
         if (giftRound) {
 
@@ -1909,14 +1591,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftGameTitle) {
 
             giftGameTitle.textContent =
                 "Perhatikan baik-baik.";
 
         }
-
 
         if (giftGameText) {
 
@@ -1925,11 +1605,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         updateGiftStatus(
             "PERHATIKAN"
         );
-
 
         if (giftGameMessage) {
 
@@ -1943,7 +1621,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftRetry) {
 
             giftRetry.classList.add(
@@ -1951,7 +1628,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         }
-
 
         if (hiddenGiftLetter) {
 
@@ -1966,9 +1642,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         resetAllGiftPositions();
-
 
         gameGiftButtons.forEach(
             box => {
@@ -1978,12 +1652,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 box.disabled = true;
 
-
                 const letter =
                     box.querySelector(
                         ".gift-secret-letter"
                     );
-
 
                 if (letter) {
 
@@ -1998,23 +1670,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         const randomIndex =
             Math.floor(
                 Math.random() *
                 gameGiftButtons.length
             );
 
-
         const winner =
             gameGiftButtons[randomIndex];
-
 
         winningBoxId =
             winner
                 ? winner.dataset.box
                 : null;
-
 
         setTimeout(
             () => {
@@ -2024,7 +1692,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 ) {
                     return;
                 }
-
 
                 revealWinningBox(
                     token
@@ -2036,11 +1703,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       WINNING BOX
-    ===================================================== */
-
     function getWinningBox() {
 
         return gameGiftButtons.find(
@@ -2051,14 +1713,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     async function revealWinningBox(
         token
     ) {
 
         const winner =
             getWinningBox();
-
 
         if (
             !winner ||
@@ -2067,11 +1727,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         updateGiftStatus(
             "LIHAT BAIK-BAIK"
         );
-
 
         if (giftGameTitle) {
 
@@ -2080,24 +1738,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         winner.classList.add(
             "opening",
             "winner-glow"
         );
 
-
         await sleep(600);
 
-
         if (token !== gameToken) return;
-
 
         const letter =
             winner.querySelector(
                 ".gift-secret-letter"
             );
-
 
         if (!letter) {
 
@@ -2109,11 +1762,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         letter.classList.add(
             "show-secret"
         );
-
 
         if (giftGameTitle) {
 
@@ -2122,7 +1773,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftGameText) {
 
             giftGameText.textContent =
@@ -2130,12 +1780,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         await sleep(1100);
 
-
         if (token !== gameToken) return;
-
 
         letter.classList.remove(
             "show-secret"
@@ -2145,12 +1792,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "inserting"
         );
 
-
         await sleep(800);
 
-
         if (token !== gameToken) return;
-
 
         letter.classList.remove(
             "inserting"
@@ -2160,9 +1804,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "secret-inside"
         );
 
-
         await sleep(450);
-
 
         winner.classList.remove(
             "opening"
@@ -2172,28 +1814,19 @@ document.addEventListener("DOMContentLoaded", () => {
             "open"
         );
 
-
         await sleep(650);
-
 
         winner.classList.remove(
             "open"
         );
 
-
         await sleep(400);
-
 
         await startGiftShuffle(
             token
         );
 
     }
-
-
-    /* =====================================================
-       SHUFFLE
-    ===================================================== */
 
     async function startGiftShuffle(
         token
@@ -2205,17 +1838,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         gameLocked = true;
 
-
         lockAllGiftBoxes();
-
 
         updateGiftStatus(
             "BERSIAP..."
         );
-
 
         if (giftGameTitle) {
 
@@ -2224,7 +1853,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftGameText) {
 
             giftGameText.textContent =
@@ -2232,43 +1860,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         await countdown(
             3,
             token
         );
 
-
         if (token !== gameToken) {
             return;
         }
-
 
         updateGiftStatus(
             "SHUFFLING..."
         );
 
-
         await performShuffle(
             token
         );
-
 
         if (token !== gameToken) {
             return;
         }
 
-
         gameLocked = false;
 
-
         unlockGiftBoxes();
-
 
         updateGiftStatus(
             "PILIH SATU"
         );
-
 
         if (giftGameTitle) {
 
@@ -2276,7 +1895,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Sekarang pilih satu.";
 
         }
-
 
         if (giftGameText) {
 
@@ -2286,11 +1904,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-
-
-    /* =====================================================
-       COUNTDOWN
-    ===================================================== */
 
     async function countdown(
         number,
@@ -2309,7 +1922,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             if (giftCountdown) {
 
                 giftCountdown.classList.remove(
@@ -2318,30 +1930,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             if (countdownNumber) {
 
                 countdownNumber.textContent =
                     i;
 
-
                 countdownNumber.style.animation =
                     "none";
 
-
                 void countdownNumber.offsetWidth;
-
 
                 countdownNumber.style.animation =
                     "giftCountdownPop .7s ease forwards";
 
             }
 
-
             await sleep(800);
 
         }
-
 
         if (giftCountdown) {
 
@@ -2352,11 +1958,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
     }
-
-
-    /* =====================================================
-       SWAP
-    ===================================================== */
 
     async function swapSlots(
         slotA,
@@ -2370,14 +1971,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const boxA =
             getBoxBySlot(slotA);
 
-
         const boxB =
             getBoxBySlot(slotB);
-
 
         if (
             !boxA ||
@@ -2386,23 +1984,19 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         setBoxPosition(
             boxA,
             slotB
         );
-
 
         setBoxPosition(
             boxB,
             slotA
         );
 
-
         await sleep(550);
 
     }
-
 
     async function performShuffle(
         token
@@ -2423,7 +2017,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ];
 
-
         for (
             const [a, b]
             of swaps
@@ -2435,24 +2028,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-
             await swapSlots(
                 a,
                 b,
                 token
             );
 
-
             await sleep(100);
 
         }
 
     }
-
-
-    /* =====================================================
-       CHOICE
-    ===================================================== */
 
     gameGiftButtons.forEach(
         box => {
@@ -2468,7 +2054,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         return;
                     }
 
-
                     handleGiftChoice(
                         box
                     );
@@ -2478,7 +2063,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
-
 
     async function handleGiftChoice(
         selectedBox
@@ -2491,17 +2075,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         gameLocked = true;
 
-
         lockAllGiftBoxes();
-
 
         const correct =
             selectedBox.dataset.box ===
             winningBoxId;
-
 
         if (correct) {
 
@@ -2519,22 +2099,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       CORRECT
-    ===================================================== */
-
     async function correctChoice(
         box
     ) {
 
         gameFinished = true;
 
-
         updateGiftStatus(
             "BENAR! ♥"
         );
-
 
         if (giftGameTitle) {
 
@@ -2543,7 +2116,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftGameText) {
 
             giftGameText.textContent =
@@ -2551,29 +2123,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         box.classList.add(
             "winner-glow",
             "opening"
         );
 
-
         createHeartExplosion(50);
 
-
         await sleep(650);
-
 
         box.classList.add(
             "open"
         );
 
-
         const letter =
             box.querySelector(
                 ".gift-secret-letter"
             );
-
 
         if (letter) {
 
@@ -2588,9 +2154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         await sleep(800);
-
 
         if (giftGameMessage) {
 
@@ -2604,14 +2168,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftResultHeart) {
 
             giftResultHeart.textContent =
                 "♡";
 
         }
-
 
         if (giftResultTitle) {
 
@@ -2620,7 +2182,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftResultText) {
 
             giftResultText.textContent =
@@ -2628,9 +2189,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         await sleep(900);
-
 
         if (!hiddenGiftLetter) {
             return;
@@ -2677,11 +2236,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    /* =====================================================
-       WRONG
-    ===================================================== */
-
     async function wrongChoice(
         box
     ) {
@@ -2690,14 +2244,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "BELUM TEPAT"
         );
 
-
         if (giftGameTitle) {
 
             giftGameTitle.textContent =
                 "Yah... bukan yang ini 😝";
 
         }
-
 
         if (giftGameText) {
 
@@ -2706,11 +2258,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         box.classList.add(
             "wrong"
         );
-
 
         box.animate(
             [
@@ -2737,14 +2287,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
-
         await sleep(600);
-
 
         box.classList.remove(
             "wrong"
         );
-
 
         if (giftGameMessage) {
 
@@ -2758,7 +2305,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftResultTitle) {
 
             giftResultTitle.textContent =
@@ -2766,14 +2312,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
-
         if (giftResultText) {
 
             giftResultText.textContent =
                 "Coba ingat lagi gerakan kotaknya. Kamu masih punya kesempatan.";
 
         }
-
 
         if (giftRetry) {
 
@@ -2785,11 +2329,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       RETRY
-    ===================================================== */
-
     if (giftRetry) {
 
         giftRetry.addEventListener(
@@ -2800,12 +2339,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
-
                 gameToken++;
 
-
                 currentRound++;
-
 
                 if (giftRound) {
 
@@ -2815,9 +2351,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 gameLocked = true;
-
 
                 if (giftGameMessage) {
 
@@ -2831,14 +2365,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 }
 
-
                 giftRetry.classList.add(
                     "hidden"
                 );
 
-
                 resetAllGiftPositions();
-
 
                 prepareGiftGame();
 
@@ -2847,20 +2378,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       SCROLL
-    ===================================================== */
-
     function updateScrollProgress() {
 
         if (!scrollProgress) return;
 
-
         const max =
             document.documentElement.scrollHeight -
             window.innerHeight;
-
 
         const percentage =
             max <= 0
@@ -2869,7 +2393,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     window.scrollY /
                     max
                 ) * 100;
-
 
         scrollProgress.style.width =
             clamp(
@@ -2880,7 +2403,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     window.addEventListener(
         "scroll",
         updateScrollProgress,
@@ -2889,13 +2411,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
     window.addEventListener(
         "resize",
         () => {
 
             updateScrollProgress();
-
 
             if (!zipperOpened) {
 
@@ -2906,32 +2426,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             if (!clueOpened) {
 
                 resetClueZipper();
 
             }
 
-
             resetAllGiftPositions();
 
         }
     );
 
-
     updateScrollProgress();
-
-
-    /* =====================================================
-       REVEAL
-    ===================================================== */
 
     const revealElements =
         document.querySelectorAll(
             ".reveal"
         );
-
 
     if (
         "IntersectionObserver"
@@ -2953,7 +2464,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                     "show"
                                 );
 
-
                                 observer.unobserve(
                                     entry.target
                                 );
@@ -2968,7 +2478,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     threshold: .12
                 }
             );
-
 
         revealElements.forEach(
             element =>
@@ -2986,17 +2495,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
-    /* =====================================================
-       DOUBLE CLICK HEART
-    ===================================================== */
-
     document.addEventListener(
         "dblclick",
         event => {
 
             if (!floatingHearts) return;
-
 
             for (
                 let i = 0;
@@ -3009,43 +2512,34 @@ document.addEventListener("DOMContentLoaded", () => {
                         "div"
                     );
 
-
                 heart.className =
                     "floating-heart";
-
 
                 heart.textContent =
                     "♥";
 
-
                 heart.style.left =
                     event.clientX + "px";
-
 
                 heart.style.top =
                     event.clientY + "px";
 
-
                 heart.style.bottom =
                     "auto";
-
 
                 heart.style.fontSize =
                     12 +
                     Math.random() * 20 +
                     "px";
 
-
                 heart.style.animationDuration =
                     2 +
                     Math.random() * 2 +
                     "s";
 
-
                 floatingHearts.appendChild(
                     heart
                 );
-
 
                 setTimeout(
                     () => heart.remove(),
@@ -3057,12 +2551,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-    /* =====================================================
-       CANDLE INTRO — OPENING → TIUP → HEART → WEBSITE
-       Ditambahkan tanpa menghapus fungsi website lama.
-    ===================================================== */
-
     let candleScene = null;
     let candleStream = null;
     let candleAudioContext = null;
@@ -3070,7 +2558,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let candleAnimationFrame = null;
     let candleDetecting = false;
     let candleBlown = false;
-
 
     function addCandleStyles() {
 
@@ -3165,7 +2652,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 perspective: 1100px;
             }
 
-            /* bayangan di meja */
             .candle-stage::after {
                 content: "";
                 position: absolute;
@@ -3208,7 +2694,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 z-index: 2;
             }
 
-            /* lower cake layer */
             .candle-cake-base {
                 position: absolute;
                 left: 4%;
@@ -3248,7 +2733,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 opacity: .65;
             }
 
-            /* upper cake tier */
             .candle-cake-top {
                 position: absolute;
                 left: 1%;
@@ -3292,7 +2776,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 opacity: .95;
             }
 
-            /* cream border */
             .candle-cake::before {
                 content: "";
                 position: absolute;
@@ -3314,7 +2797,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 z-index: 9;
             }
 
-            /* fruit and flowers */
             .candle-decoration { position:absolute; z-index:10; pointer-events:none; }
             .candle-berry {
                 width: 38px; height: 38px; border-radius: 52% 52% 45% 45%;
@@ -3333,7 +2815,6 @@ document.addEventListener("DOMContentLoaded", () => {
             .flower-1 { left:8%; top:145px; }
             .flower-2 { right:8%; top:141px; transform:scale(.88); }
 
-            /* realistic number candles */
             .number-candle {
                 position:absolute;
                 top:-13px;
@@ -3438,7 +2919,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
     }
 
-
  function openCandleScene() {
 
     addCandleStyles();
@@ -3465,12 +2945,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "Lilin ulang tahun angka 25"
     );
 
-
     candleScene.innerHTML = `
 
         <div class="candle-content">
-
-            
 
             <div class="candle-stage">
 
@@ -3478,16 +2955,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div class="candle-plate"></div>
 
-
                 <!-- TABLE SHADOW -->
 
                 <div class="table-shadow"></div>
 
-
                 <!-- AMBIENT GLOW -->
 
                 <div class="cake-glow" id="cakeGlow"></div>
-
 
                 <!-- SPARKLES -->
 
@@ -3498,7 +2972,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="cake-sparkle sparkle-5">✦</span>
                 <span class="cake-sparkle sparkle-6">✧</span>
 
-
                 <!-- CAKE -->
 
                 <div
@@ -3506,10 +2979,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     id="candleCake"
                 >
 
-
-                    <!-- =================================================
-                         NUMBER 2
-                    ================================================== -->
+                    
 
                     <div
                         class="number-candle number-candle-2"
@@ -3559,7 +3029,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             </defs>
 
-
                             <text
                                 x="122"
                                 y="204"
@@ -3567,14 +3036,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 class="wax-number"
                             >2</text>
 
-
                             <text
                                 x="122"
                                 y="204"
                                 text-anchor="middle"
                                 class="wax-highlight"
                             >2</text>
-
 
                             <!-- little hearts on wax -->
 
@@ -3586,7 +3053,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 font-size="15"
                             >♥</text>
 
-
                             <text
                                 x="151"
                                 y="160"
@@ -3594,7 +3060,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 class="wax-heart"
                                 font-size="11"
                             >♥</text>
-
 
                             <circle
                                 class="wax-dot"
@@ -3605,18 +3070,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         </svg>
 
-
                         <span
                             class="number-flame"
                         ></span>
 
                     </div>
 
-
-
-                    <!-- =================================================
-                         NUMBER 5
-                    ================================================== -->
 
                     <div
                         class="number-candle number-candle-5"
@@ -3666,7 +3125,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
                             </defs>
 
-
                             <text
                                 x="122"
                                 y="204"
@@ -3674,14 +3132,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 class="wax-number wax-number-5"
                             >5</text>
 
-
                             <text
                                 x="122"
                                 y="204"
                                 text-anchor="middle"
                                 class="wax-highlight"
                             >5</text>
-
 
                             <text
                                 x="98"
@@ -3691,7 +3147,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 font-size="14"
                             >♥</text>
 
-
                             <text
                                 x="153"
                                 y="158"
@@ -3699,7 +3154,6 @@ document.addEventListener("DOMContentLoaded", () => {
                                 class="wax-heart"
                                 font-size="11"
                             >♥</text>
-
 
                             <circle
                                 class="wax-dot"
@@ -3710,18 +3164,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         </svg>
 
-
                         <span
                             class="number-flame"
                         ></span>
 
                     </div>
 
-
-
-                    <!-- =================================================
-                         STRAWBERRIES
-                    ================================================== -->
 
                     <div
                         class="strawberry berry-1"
@@ -3743,7 +3191,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         class="strawberry berry-5"
                     ></div>
 
-
                     <div
                         class="strawberry-cut cut-1"
                     ></div>
@@ -3752,11 +3199,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         class="strawberry-cut cut-2"
                     ></div>
 
-
-
-                    <!-- =================================================
-                         FLOWERS
-                    ================================================== -->
 
                     <div
                         class="cake-flower flower-1"
@@ -3770,12 +3212,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         ✿
                     </div>
 
-
-
-                    <!-- =================================================
-                         WHIPPED CREAM
-                    ================================================== -->
-
                     <div class="cream-swirl cream-1"></div>
                     <div class="cream-swirl cream-2"></div>
                     <div class="cream-swirl cream-3"></div>
@@ -3785,11 +3221,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="cream-swirl cream-7"></div>
                     <div class="cream-swirl cream-8"></div>
 
-
-
-                    <!-- =================================================
-                         RIBBON LEFT
-                    ================================================== -->
 
                     <div
                         class="cake-ribbon ribbon-left"
@@ -3816,12 +3247,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         ></span>
 
                     </div>
-
-
-
-                    <!-- =================================================
-                         RIBBON RIGHT
-                    ================================================== -->
 
                     <div
                         class="cake-ribbon ribbon-right"
@@ -3850,11 +3275,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
 
 
-
-                    <!-- =================================================
-                         HEART DECORATIONS
-                    ================================================== -->
-
                     <span class="cake-heart heart-1">
                         ♥
                     </span>
@@ -3876,25 +3296,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     </span>
 
 
-
-                    <!-- =================================================
-                         CAKE TOP / BODY
-                    ================================================== -->
-
                     <div
                         class="candle-cake-top"
                     ></div>
-
 
                     <div
                         class="candle-cake-base"
                     ></div>
 
-
-
-                    <!-- =================================================
-                         SMOKE
-                    ================================================== -->
 
                     <div
                         class="candle-smoke"
@@ -3905,11 +3314,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             </div>
 
-
             <p class="candle-hint">
                 Tiup lilinnya sayaang♡
             </p>
-
 
             <button
                 type="button"
@@ -3922,7 +3329,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     `;
 
-
     document.body.appendChild(
         candleScene
     );
@@ -3931,12 +3337,10 @@ document.addEventListener("DOMContentLoaded", () => {
         "candle-active"
     );
 
-
     const fallback =
         candleScene.querySelector(
             "#candleFallback"
         );
-
 
     if (fallback) {
 
@@ -3959,10 +3363,6 @@ document.addEventListener("DOMContentLoaded", () => {
     style.id = "candle-inline-styles";
 
     style.textContent = `
-
-    /* =========================================================
-       REALISTIC BIRTHDAY CAKE — CANDLE INTRO
-    ========================================================= */
 
     body.candle-active {
         overflow: hidden !important;
@@ -4009,9 +3409,6 @@ document.addEventListener("DOMContentLoaded", () => {
             visibility .9s ease;
     }
 
-
-    /* background bokeh */
-
     #candleScene::before {
         content: "";
 
@@ -4044,7 +3441,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pointer-events: none;
     }
 
-
     #candleScene::after {
         content: "";
 
@@ -4060,11 +3456,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         pointer-events: none;
     }
-
-
-    /* =========================================================
-       CONTENT
-    ========================================================= */
 
     .candle-content {
         position: relative;
@@ -4085,7 +3476,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         text-align: center;
     }
-
 
     .candle-text {
         position: relative;
@@ -4125,11 +3515,6 @@ document.addEventListener("DOMContentLoaded", () => {
             both;
     }
 
-
-    /* =========================================================
-       STAGE
-    ========================================================= */
-
     .candle-stage {
         position: relative;
 
@@ -4151,11 +3536,6 @@ document.addEventListener("DOMContentLoaded", () => {
             cubic-bezier(.22,1,.36,1)
             both;
     }
-
-
-    /* =========================================================
-       PLATE
-    ========================================================= */
 
     .candle-plate {
         position: absolute;
@@ -4192,11 +3572,6 @@ document.addEventListener("DOMContentLoaded", () => {
         z-index: 1;
     }
 
-
-    /* =========================================================
-       TABLE SHADOW
-    ========================================================= */
-
     .candle-stage .table-shadow {
         position: absolute;
 
@@ -4218,11 +3593,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         z-index: 0;
     }
-
-
-    /* =========================================================
-       CAKE
-    ========================================================= */
 
     .candle-cake {
         position: absolute;
@@ -4250,9 +3620,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         z-index: 5;
     }
-
-
-    /* cake body */
 
     .candle-cake-base {
         position: absolute;
@@ -4302,9 +3669,6 @@ document.addEventListener("DOMContentLoaded", () => {
         z-index: 2;
     }
 
-
-    /* subtle cake texture */
-
     .candle-cake-base::after {
         content: "";
 
@@ -4322,9 +3686,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         opacity: .6;
     }
-
-
-    /* cake top */
 
     .candle-cake-top {
         position: absolute;
@@ -4366,9 +3727,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         z-index: 8;
     }
-
-
-    /* frosting dripping from top */
 
     .candle-cake-top::before {
         content: "";
@@ -4414,11 +3772,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 rgba(121,55,74,.18)
             );
     }
-
-
-    /* =========================================================
-       WHIPPED CREAM SWIRLS
-    ========================================================= */
 
     .cream-swirl {
         position: absolute;
@@ -4481,7 +3834,6 @@ document.addEventListener("DOMContentLoaded", () => {
         top: 2px;
     }
 
-
     .cream-1 {
         left: 5%;
         top: 165px;
@@ -4530,11 +3882,6 @@ document.addEventListener("DOMContentLoaded", () => {
         transform: rotate(8deg);
     }
 
-
-    /* =========================================================
-       STRAWBERRIES
-    ========================================================= */
-
     .strawberry {
         position: absolute;
 
@@ -4575,7 +3922,6 @@ document.addEventListener("DOMContentLoaded", () => {
         z-index: 20;
     }
 
-
     .strawberry::before {
         content: "";
 
@@ -4610,7 +3956,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
     }
 
-
     .strawberry::after {
         content: "";
 
@@ -4632,7 +3977,6 @@ document.addEventListener("DOMContentLoaded", () => {
             7px 17px #ffe7d4,
             26px 22px #ffe7d4;
     }
-
 
     .berry-1 {
         left: 13%;
@@ -4663,11 +4007,6 @@ document.addEventListener("DOMContentLoaded", () => {
         top: 125px;
         transform: rotate(-3deg) scale(.75);
     }
-
-
-    /* =========================================================
-       CUT STRAWBERRY
-    ========================================================= */
 
     .strawberry-cut {
         position: absolute;
@@ -4739,11 +4078,6 @@ document.addEventListener("DOMContentLoaded", () => {
         transform: rotate(-13deg) scale(.9);
     }
 
-
-    /* =========================================================
-       FLOWERS
-    ========================================================= */
-
     .cake-flower {
         position: absolute;
 
@@ -4791,11 +4125,6 @@ document.addEventListener("DOMContentLoaded", () => {
             scale(.9);
     }
 
-
-    /* =========================================================
-       HEART DECORATIONS
-    ========================================================= */
-
     .cake-heart {
         position: absolute;
 
@@ -4837,11 +4166,6 @@ document.addEventListener("DOMContentLoaded", () => {
         bottom: 58px;
         font-size: 12px;
     }
-
-
-    /* =========================================================
-       PINK RIBBONS
-    ========================================================= */
 
     .cake-ribbon {
         position: absolute;
@@ -4959,11 +4283,6 @@ document.addEventListener("DOMContentLoaded", () => {
         bottom: 112px;
     }
 
-
-    /* =========================================================
-       NUMBER CANDLES
-    ========================================================= */
-
     .number-candle {
         position: absolute;
 
@@ -4981,7 +4300,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
     }
 
-
     .number-candle-2 {
         left:
             calc(50% - 178px);
@@ -4992,14 +4310,12 @@ document.addEventListener("DOMContentLoaded", () => {
             calc(50% - 178px);
     }
 
-
     .number-candle svg {
         width: 100%;
         height: 100%;
 
         overflow: visible;
     }
-
 
     .wax-number {
         font-family:
@@ -5030,12 +4346,10 @@ document.addEventListener("DOMContentLoaded", () => {
             url(#waxGradient);
     }
 
-
     .wax-number-5 {
         fill:
             url(#waxGradient5);
     }
-
 
     .wax-highlight {
         font-family:
@@ -5064,12 +4378,10 @@ document.addEventListener("DOMContentLoaded", () => {
         opacity: .85;
     }
 
-
     .wax-detail {
         fill:
             rgba(255,255,255,.72);
     }
-
 
     .wax-heart {
         fill:
@@ -5082,18 +4394,12 @@ document.addEventListener("DOMContentLoaded", () => {
             );
     }
 
-
     .wax-dot {
         fill:
             #fff4f7;
 
         opacity: .8;
     }
-
-
-    /* =========================================================
-       FLAMES
-    ========================================================= */
 
     .number-flame {
         position: absolute;
@@ -5151,7 +4457,6 @@ document.addEventListener("DOMContentLoaded", () => {
             alternate;
     }
 
-
     .number-flame::before {
         content: "";
 
@@ -5172,22 +4477,15 @@ document.addEventListener("DOMContentLoaded", () => {
             #422b2d;
     }
 
-
     .number-candle-2
     .number-flame {
         left: 49%;
     }
 
-
     .number-candle-5
     .number-flame {
         left: 51%;
     }
-
-
-    /* =========================================================
-       SMOKE
-    ========================================================= */
 
     .candle-smoke {
         position: absolute;
@@ -5207,7 +4505,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         pointer-events: none;
     }
-
 
     .candle-smoke::before,
     .candle-smoke::after {
@@ -5230,14 +4527,12 @@ document.addEventListener("DOMContentLoaded", () => {
             blur(2px);
     }
 
-
     .candle-smoke::before {
         left: 40px;
 
         transform:
             rotate(-14deg);
     }
-
 
     .candle-smoke::after {
         right: 35px;
@@ -5247,7 +4542,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         opacity: .55;
     }
-
 
     .candle-cake.is-blown
     .number-flame {
@@ -5265,7 +4559,6 @@ document.addEventListener("DOMContentLoaded", () => {
             transform .25s ease;
     }
 
-
     .candle-cake.is-blown
     .candle-smoke {
         opacity: 1;
@@ -5276,11 +4569,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ease-out
             forwards;
     }
-
-
-    /* =========================================================
-       HINT
-    ========================================================= */
 
     .candle-hint {
         position: relative;
@@ -5310,9 +4598,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ease-in-out
             infinite;
     }
-
-
-    /* fallback */
 
     .candle-fallback {
         display: none;
@@ -5345,16 +4630,10 @@ document.addEventListener("DOMContentLoaded", () => {
         font: inherit;
     }
 
-
     .candle-fallback.show {
         display:
             inline-flex;
     }
-
-
-    /* =========================================================
-       AMBIENT CAKE GLOW
-    ========================================================= */
 
     .cake-glow {
         position: absolute;
@@ -5386,11 +4665,6 @@ document.addEventListener("DOMContentLoaded", () => {
         transition: opacity .8s ease;
     }
 
-
-    /* =========================================================
-       SPARKLES AROUND CAKE
-    ========================================================= */
-
     .cake-sparkle {
         position: absolute;
         z-index: 60;
@@ -5408,11 +4682,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .sparkle-4 { right: 16%; top: 58%; font-size: 12px; animation-delay: 1.5s; }
     .sparkle-5 { left: 32%; top: 8%;   font-size: 13px; animation-delay: .8s; }
     .sparkle-6 { right: 30%; top: 6%;  font-size: 15px; animation-delay: 1.9s; }
-
-
-    /* =========================================================
-       LOVE BURST (right as the candle is blown out)
-    ========================================================= */
 
     .candle-heart-burst {
         position: fixed;
@@ -5442,11 +4711,6 @@ document.addEventListener("DOMContentLoaded", () => {
         will-change: transform, opacity;
     }
 
-
-    /* =========================================================
-       LOVE SHOWER (continuous float after the burst)
-    ========================================================= */
-
     .candle-float-heart {
         position: fixed;
         bottom: -60px;
@@ -5465,11 +4729,6 @@ document.addEventListener("DOMContentLoaded", () => {
         will-change: transform, opacity;
     }
 
-
-    /* =========================================================
-       ANIMATIONS
-    ========================================================= */
-
     @keyframes candleTextIn {
 
         from {
@@ -5484,7 +4743,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 translateY(0);
         }
     }
-
 
     @keyframes cakeStageIn {
 
@@ -5504,7 +4762,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 scale(1);
         }
     }
-
 
     @keyframes realisticFlame {
 
@@ -5529,7 +4786,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 scale(1.08,1.04);
         }
     }
-
 
     @keyframes smokeRise {
 
@@ -5563,7 +4819,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     @keyframes hintPulse {
 
         0%,100% {
@@ -5574,7 +4829,6 @@ document.addEventListener("DOMContentLoaded", () => {
             opacity: 1;
         }
     }
-
 
     @keyframes cakeGlowPulse {
         0%,100% {
@@ -5587,7 +4841,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     @keyframes sparkleTwinkle {
         0%,100% {
             opacity: 0;
@@ -5598,7 +4851,6 @@ document.addEventListener("DOMContentLoaded", () => {
             transform: scale(1.15) rotate(90deg);
         }
     }
-
 
     @keyframes candleHeartFly {
         0% {
@@ -5622,7 +4874,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 rotate(var(--rotate));
         }
     }
-
 
     @keyframes candleHeartFloat {
         0% {
@@ -5648,11 +4899,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 rotate(var(--spin));
         }
     }
-
-
-    /* =========================================================
-       MOBILE
-    ========================================================= */
 
     @media (max-width: 600px) {
 
@@ -5705,7 +4951,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.head.appendChild(style);
 }
 
-
     function stopCandleMicrophone() {
 
         candleDetecting = false;
@@ -5727,7 +4972,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         candleAnalyser = null;
     }
-
 
     async function startCandleMicrophone() {
 
@@ -5818,7 +5062,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function createCandleHeartBurst() {
 
         const burst = document.createElement("div");
@@ -5827,8 +5070,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const symbols = ["♥", "♡", "❤", "♡", "♥", "✦"];
         const colors = ["#ff6f9f", "#ff9fc0", "#ffd1df", "#ffffff", "#e85d8f", "#ffd9e6"];
-
-        /* ---------- 1. INSTANT BURST FROM THE CANDLES ---------- */
 
         const burstCount = window.innerWidth < 600 ? 90 : 150;
 
@@ -5852,8 +5093,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             burst.appendChild(heart);
         }
-
-        /* ---------- 2. CONTINUOUS LOVE SHOWER FLOATING UP ---------- */
 
         const showerDuration = 3200;
         const showerStart = performance.now();
@@ -5900,7 +5139,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => burst.remove(), showerDuration + 5600);
     }
 
-
     function closeCandleScene() {
 
         stopCandleMicrophone();
@@ -5930,7 +5168,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1050);
     }
 
-
     function extinguishCandle() {
 
         if (candleBlown || !candleScene) return;
@@ -5938,7 +5175,6 @@ document.addEventListener("DOMContentLoaded", () => {
         candleBlown = true;
         stopCandleMicrophone();
 
-        /* Musik baru mulai tepat setelah lilin berhasil ditiup. */
         playMusic();
 
         const cake = candleScene.querySelector("#candleCake");
@@ -5954,13 +5190,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1350);
     }
 
-
-    /* =====================================================
-       INITIAL
-    ===================================================== */
-
     updateMusicUI();
-
 
     if (website) {
 
@@ -5970,14 +5200,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-
     if (zipperHandle) {
 
         zipperHandle.style.top =
             "8px";
 
     }
-
 
     requestAnimationFrame(
         () => {
