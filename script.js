@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="birthday-gate-door birthday-gate-door-right" aria-hidden="true"></div>
             <div class="birthday-gate-card">
                 <div class="birthday-gate-kicker">♡ Sebelum masuk ♡</div>
-                <h2>Kapan kita pertama kali bertemu ?</h2>
+                <h2>Setelah berpisah, kapan kemudian kita bertemu kembali ?</h2>
                 <p class="birthday-gate-subtitle">
                     
                 </p>
