@@ -139,56 +139,132 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
-    if (startButton) {
+    function normalizeMeetingAnswer(value) {
+        return String(value || "")
+            .trim()
+            .toLowerCase()
+            .replace(/,/g, "")
+            .replace(/\s+/g, " ");
+    }
 
-        startButton.addEventListener(
-            "click",
-            async () => {
+    function showBirthdayGate() {
+        if (document.getElementById("birthdayGate")) return;
 
-                if (intro) {
+        const gate = document.createElement("div");
+        gate.id = "birthdayGate";
+        gate.className = "birthday-gate";
+        gate.innerHTML = `
+            <div class="birthday-gate-door birthday-gate-door-left" aria-hidden="true"></div>
+            <div class="birthday-gate-door birthday-gate-door-right" aria-hidden="true"></div>
+            <div class="birthday-gate-card">
+                <div class="birthday-gate-kicker">♡ Sebelum masuk ♡</div>
+                <h2>Setelah Berpisah, Kapan kita pertama kali bertemu ?</h2>
+                <p class="birthday-gate-subtitle"></p>
+                <input
+                    id="birthdayGateInput"
+                    class="birthday-gate-input"
+                    type="text"
+                    autocomplete="off"
+                    
+                >
+                <button id="birthdayGateSubmit" class="birthday-gate-submit" type="button">
+                    Masuk ♡
+                </button>
+                <div id="birthdayGateFeedback" class="birthday-gate-feedback" aria-live="polite"></div>
+            </div>
+        `;
 
-                    intro.classList.add(
-                        "hidden"
-                    );
+        document.body.appendChild(gate);
 
-                }
+        const input = gate.querySelector("#birthdayGateInput");
+        const submit = gate.querySelector("#birthdayGateSubmit");
+        const feedback = gate.querySelector("#birthdayGateFeedback");
 
-                if (website) {
+        const correctAnswers = new Set([
+            "27 maret 2026",
+            "27/03/2026",
+            "27-03-2026",
+            "27.03.2026",
+            "2026-03-27"
+        ]);
 
-                    website.classList.remove(
-                        "hidden"
-                    );
+        const checkAnswer = async () => {
+            const answer = normalizeMeetingAnswer(input.value);
+            const isCorrect = correctAnswers.has(answer);
 
-                    website.classList.add(
-                        "is-visible"
-                    );
-
-                }
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "instant"
-                });
-
-                openCandleScene();
-
-                startCandleMicrophone();
-
-                if (music) {
-                    try {
-                        music.muted = true;
-                        await music.play();
-                        music.pause();
-                        music.currentTime = 0;
-                        music.muted = false;
-                    } catch (error) {
-                        music.muted = false;
-                    }
-                }
-
+            if (!isCorrect) {
+                gate.classList.remove("success", "wrong");
+                void gate.offsetWidth;
+                gate.classList.add("wrong");
+                feedback.textContent = "kamu bukan Dini Septiani. Dilarang masuk";
+                return;
             }
-        );
 
+            gate.classList.remove("wrong");
+            gate.classList.add("success");
+            feedback.textContent = "betul sekali kamu adalah Dini Septiani, silahkan Tuan putri";
+            input.disabled = true;
+            submit.disabled = true;
+
+            createHeartExplosion(18);
+
+            await sleep(1900);
+
+            gate.classList.add("closing");
+            await sleep(900);
+            gate.classList.add("hide");
+
+            await sleep(700);
+            gate.remove();
+
+            if (intro) {
+                intro.classList.add("hidden");
+            }
+
+            if (website) {
+                website.classList.remove("hidden");
+                website.classList.add("is-visible");
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: "instant"
+            });
+
+            openCandleScene();
+            startCandleMicrophone();
+
+            if (music) {
+                try {
+                    music.muted = true;
+                    await music.play();
+                    music.pause();
+                    music.currentTime = 0;
+                    music.muted = false;
+                } catch (error) {
+                    music.muted = false;
+                }
+            }
+        };
+
+        submit.addEventListener("click", checkAnswer);
+        input.addEventListener("keydown", event => {
+            if (event.key === "Enter") checkAnswer();
+        });
+
+        requestAnimationFrame(() => {
+            gate.classList.add("show");
+            requestAnimationFrame(() => {
+                gate.classList.add("open");
+                input.focus();
+            });
+        });
+    }
+
+    if (startButton) {
+        startButton.addEventListener("click", () => {
+            showBirthdayGate();
+        });
     }
 
     function createFloatingHeart() {
