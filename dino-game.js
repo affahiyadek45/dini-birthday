@@ -1,6 +1,6 @@
-/* =========================================================
+/* 
    DINO LOVE GAME — floating modal, progressive difficulty
-========================================================= */
+ */
 
 (() => {
     function initDinoGame() {
@@ -14,8 +14,6 @@
         const wrap = $("dinoCanvasWrap");
         const startButton = $("dinoStartButton");
         const restartButton = $("dinoRestartButton");
-        const leftButton = $("dinoLeftButton");
-        const rightButton = $("dinoRightButton");
         const overlay = $("dinoOverlay");
         const overlayTitle = $("dinoOverlayTitle");
         const overlayText = $("dinoOverlayText");
@@ -39,7 +37,6 @@
         let groundOffset = 0;
         let cloudOffset = 0;
         let obstacles = [];
-        const moveInput = { left: false, right: false };
 
         const dino = { x: 100, y: 0, w: 48, h: 60, vy: 0, jumping: false };
 
@@ -73,8 +70,6 @@
             obstacles = [];
             dino.vy = 0;
             dino.jumping = false;
-            moveInput.left = false;
-            moveInput.right = false;
             dino.y = groundY() - dino.h;
             updateHud();
             if (showOverlay) overlay.classList.remove("is-hidden");
@@ -184,17 +179,6 @@
 
             groundOffset = (groundOffset + speed * step) % 42;
             cloudOffset = (cloudOffset + speed * .07 * step) % (W + 250);
-
-            const moveSpeed = Math.max(3.8, Math.min(7.2, W * .006));
-            if (moveInput.left && !moveInput.right) {
-                dino.x -= moveSpeed * step;
-            } else if (moveInput.right && !moveInput.left) {
-                dino.x += moveSpeed * step;
-            }
-
-            const minX = Math.max(18, W * .025);
-            const maxX = W - dino.w - Math.max(18, W * .025);
-            dino.x = Math.max(minX, Math.min(maxX, dino.x));
 
             dino.vy += .72 * step;
             dino.y += dino.vy * step;
@@ -345,59 +329,17 @@
             jump();
         }
 
-        function setMove(direction, pressed, event) {
-            if (event) event.preventDefault();
-            moveInput[direction] = pressed;
-            if (pressed && !running) startGame();
-        }
-
-        function bindMoveButton(button, direction) {
-            if (!button) return;
-            button.addEventListener("pointerdown", e => {
-                button.setPointerCapture?.(e.pointerId);
-                setMove(direction, true, e);
-            }, { passive: false });
-            const release = e => setMove(direction, false, e);
-            button.addEventListener("pointerup", release, { passive: false });
-            button.addEventListener("pointercancel", release, { passive: false });
-            button.addEventListener("pointerleave", e => {
-                if (e.buttons === 0) setMove(direction, false, e);
-            }, { passive: false });
-        }
-
         openButton?.addEventListener("click", openGame);
         closeButton?.addEventListener("click", closeGame);
         backdrop?.addEventListener("click", closeGame);
         startButton?.addEventListener("click", startGame);
         restartButton?.addEventListener("click", startGame);
-        bindMoveButton(leftButton, "left");
-        bindMoveButton(rightButton, "right");
         wrap.addEventListener("pointerdown", input, { passive: false });
 
         window.addEventListener("keydown", e => {
             if (!modal.classList.contains("is-open")) return;
-
-            if (e.code === "Space" || e.code === "ArrowUp") {
-                input(e);
-                return;
-            }
-
-            if (e.code === "ArrowLeft" || e.code === "KeyA") {
-                setMove("left", true, e);
-                return;
-            }
-
-            if (e.code === "ArrowRight" || e.code === "KeyD") {
-                setMove("right", true, e);
-                return;
-            }
-
+            if (e.code === "Space" || e.code === "ArrowUp") input(e);
             if (e.code === "Escape") closeGame();
-        }, { passive: false });
-
-        window.addEventListener("keyup", e => {
-            if (e.code === "ArrowLeft" || e.code === "KeyA") setMove("left", false, e);
-            if (e.code === "ArrowRight" || e.code === "KeyD") setMove("right", false, e);
         }, { passive: false });
 
         window.addEventListener("resize", resize);
