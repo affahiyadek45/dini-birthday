@@ -725,3 +725,25 @@
         transition: none;
     }
 }
+
+.dino-controls button {
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: linear-gradient(
+        180deg,
+        rgba(215, 170, 165, .18),
+        rgba(215, 170, 165, .07)
+    ) !important;
+
+    color: #f5d8d5 !important;
+
+    border: 1px solid rgba(215, 170, 165, .35) !important;
+    border-radius: 14px !important;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.08),
+        0 5px 15px rgba(0,0,0,.25);
+
+    -webkit-tap-highlight-color: transparent;
+}
