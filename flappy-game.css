@@ -1,0 +1,630 @@
+/* 
+   GAME TABS
+ */
+
+.game-tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    margin: 0 auto 22px;
+
+    padding: 6px;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 999px;
+
+    background:
+        rgba(255, 255, 255, .025);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, .18);
+
+    position: relative;
+    z-index: 20;
+}
+
+.game-tab {
+    appearance: none;
+    border: 0;
+
+    flex: 1;
+
+    min-height: 42px;
+
+    padding: 10px 16px;
+
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: rgba(255, 255, 255, .52);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    letter-spacing: 1.4px;
+
+    cursor: pointer;
+
+    transition:
+        background .25s ease,
+        color .25s ease,
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+.game-tab:hover {
+    color: rgba(255, 255, 255, .86);
+
+    background:
+        rgba(255, 255, 255, .045);
+}
+
+.game-tab:active {
+    transform: scale(.97);
+}
+
+.game-tab.is-active {
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(224, 170, 169, .28),
+            rgba(207, 162, 157, .12)
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, .08),
+        0 8px 22px rgba(0, 0, 0, .18);
+}
+
+
+/* 
+   GAME VIEW
+ */
+
+.game-view {
+    width: 100%;
+}
+
+.game-view[hidden] {
+    display: none !important;
+}
+
+
+/* 
+   FLAPPY SHELL
+ */
+
+.flappy-game-shell {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 30px auto 0;
+
+    padding: 16px;
+
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: 24px;
+
+    background:
+        rgba(255, 255, 255, .025);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, .30);
+}
+
+
+/* 
+   TOP BAR
+ */
+
+.flappy-topbar {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        auto
+        1fr;
+
+    align-items: center;
+
+    padding: 0 10px 11px;
+
+    color: #cfa29d;
+
+    font-size: 10px;
+
+    letter-spacing: 2.5px;
+}
+
+.flappy-topbar span:nth-child(2) {
+    text-align: center;
+
+    color:
+        rgba(255, 255, 255, .48);
+}
+
+.flappy-topbar span:last-child {
+    text-align: right;
+}
+
+
+/* 
+   CANVAS
+ */
+
+.flappy-canvas-wrap {
+    position: relative;
+
+    width: 100%;
+
+    height:
+        clamp(
+            360px,
+            40vw,
+            560px
+        );
+
+    min-height: 320px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(255, 255, 255, .08);
+
+    background:
+        #111010;
+
+    touch-action: none;
+
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#flappyCanvas {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    touch-action: none;
+
+    cursor: pointer;
+}
+
+
+/* 
+   OVERLAY
+ */
+
+.flappy-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background:
+        rgba(9, 9, 9, .60);
+
+    backdrop-filter:
+        blur(4px);
+
+    -webkit-backdrop-filter:
+        blur(4px);
+
+    transition:
+        opacity .3s ease;
+
+    z-index: 5;
+}
+
+.flappy-overlay.is-hidden {
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.flappy-overlay-heart {
+    margin-bottom: 3px;
+
+    color: #e0aaa9;
+
+    font-size: 38px;
+
+    animation:
+        flappyHeartFloat 2s ease-in-out infinite;
+}
+
+@keyframes flappyHeartFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translateY(-7px)
+            scale(1.08);
+    }
+}
+
+.flappy-overlay h3 {
+    margin: 0;
+
+    color: #fff;
+
+    font-family:
+        "Cormorant Garamond",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            34px,
+            4vw,
+            55px
+        );
+
+    font-weight: 500;
+
+    line-height: 1;
+}
+
+.flappy-overlay p {
+    width: min(500px, 90%);
+
+    margin:
+        14px auto 20px;
+
+    color:
+        rgba(255, 255, 255, .68);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+#flappyStartButton {
+    appearance: none;
+
+    border: 1px solid
+        rgba(255, 255, 255, .13);
+
+    border-radius: 999px;
+
+    padding:
+        12px 22px;
+
+    background:
+        rgba(224, 170, 169, .16);
+
+    color: #fff;
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.8px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 30px
+        rgba(0, 0, 0, .20);
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+#flappyStartButton:hover {
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(224, 170, 169, .25);
+
+    border-color:
+        rgba(255, 255, 255, .22);
+}
+
+#flappyStartButton:active {
+    transform:
+        scale(.96);
+}
+
+
+/* 
+   CONTROLS
+ */
+
+.flappy-controls {
+    display: grid;
+
+    grid-template-columns:
+        minmax(180px, auto)
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        15px 5px 2px;
+}
+
+.flappy-tap-button,
+#flappyRestartButton {
+    appearance: none;
+
+    border: 1px solid
+        rgba(255, 255, 255, .10);
+
+    border-radius: 999px;
+
+    min-height: 42px;
+
+    padding:
+        10px 16px;
+
+    background:
+        rgba(255, 255, 255, .035);
+
+    color:
+        rgba(255, 255, 255, .82);
+
+    font-family:
+        "DM Sans",
+        Arial,
+        sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 1.2px;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+}
+
+.flappy-tap-button:hover,
+#flappyRestartButton:hover {
+    background:
+        rgba(255, 255, 255, .07);
+
+    border-color:
+        rgba(255, 255, 255, .17);
+
+    transform:
+        translateY(-1px);
+}
+
+.flappy-tap-button:active,
+#flappyRestartButton:active {
+    transform:
+        scale(.97);
+}
+
+.flappy-tap-button {
+    color:
+        #e0aaa9;
+
+    border-color:
+        rgba(224, 170, 169, .20);
+
+    background:
+        rgba(224, 170, 169, .08);
+}
+
+.flappy-control-hints {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap:
+        6px 15px;
+
+    color:
+        rgba(255, 255, 255, .36);
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+
+    line-height: 1.6;
+}
+
+.flappy-love-note {
+    margin:
+        16px auto 0;
+
+    color:
+        rgba(255, 255, 255, .45);
+
+    font-family:
+        "Caveat",
+        cursive;
+
+    font-size: 20px;
+
+    text-align: center;
+}
+
+
+/* 
+   MOBILE
+ */
+
+@media (max-width: 700px) {
+
+    .game-tabs {
+        margin-bottom: 16px;
+    }
+
+    .game-tab {
+        min-height: 40px;
+
+        padding:
+            9px 8px;
+
+        font-size: 9px;
+
+        letter-spacing: 1px;
+    }
+
+    .flappy-game-shell {
+        margin-top: 20px;
+
+        padding: 10px;
+
+        border-radius: 18px;
+    }
+
+    .flappy-topbar {
+        padding:
+            0 6px 9px;
+
+        font-size: 8px;
+
+        letter-spacing: 1.6px;
+    }
+
+    .flappy-canvas-wrap {
+        height:
+            min(
+                74vh,
+                560px
+            );
+
+        min-height: 330px;
+
+        border-radius: 14px;
+    }
+
+    .flappy-overlay {
+        padding: 18px;
+    }
+
+    .flappy-overlay-heart {
+        font-size: 31px;
+    }
+
+    .flappy-overlay h3 {
+        font-size: 39px;
+    }
+
+    .flappy-overlay p {
+        font-size: 11px;
+
+        line-height: 1.6;
+    }
+
+    .flappy-controls {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+
+        padding-top: 10px;
+    }
+
+    .flappy-tap-button {
+        grid-column:
+            1 / -1;
+
+        width: 100%;
+    }
+
+    .flappy-control-hints {
+        grid-column:
+            1 / -1;
+
+        order: 3;
+
+        font-size: 8px;
+
+        gap:
+            4px 10px;
+    }
+
+    #flappyRestartButton {
+        width: 100%;
+    }
+
+    .flappy-love-note {
+        font-size: 18px;
+    }
+}
+
+
+/* 
+   VERY SMALL PHONE
+ */
+
+@media (max-width: 380px) {
+
+    .flappy-canvas-wrap {
+        min-height: 300px;
+    }
+
+    .flappy-overlay h3 {
+        font-size: 34px;
+    }
+
+    .flappy-overlay p {
+        font-size: 10px;
+    }
+
+    .flappy-tap-button,
+    #flappyRestartButton {
+        font-size: 9px;
+
+        padding:
+            9px 10px;
+    }
+}
